@@ -1,0 +1,140 @@
+[
+    {
+        "Codice":"VEN24-AT.01.16.00",
+        "Ex-Codice":"D.01.16.00",
+        "Descrizione":"COMPENSO PER TRASPORTO MATERIALE",
+        "SUB":[
+            {
+                "Codice":"VEN24-AT.09.01.a",
+                "Ex-Codice":"D.09.01.a",
+                "Descrizione":"NOLO A CALDO DI AUTOCARRO RIBALTABILE da mc 11",
+                "Qta":0.004,
+                "UMI":"h",
+                "IU":61,
+                "Importo":0.24
+            }
+        ],
+        "Totale":0.24,
+        "SGEUI":null,
+        "ITU":0.24
+    },
+    {
+        "Codice":"VEN24-AT.09.01.a",
+        "Ex-Codice":"D.09.01.a",
+        "Descrizione":"NOLO A CALDO DI AUTOCARRO RIBALTABILE da mc 11",
+        "SUB":[
+            {
+                "Codice":"VEN24-AT.09.01.a",
+                "Ex-Codice":"D.09.01.a",
+                "Descrizione":"NOLO A CALDO DI AUTOCARRO RIBALTABILE da mc 11",
+                "Qta":0.004,
+                "UMI":"h",
+                "IU":61,
+                "Importo":0.24
+            },
+            {
+                "Codice":"VEN24-AT.01.01.a",
+                "Ex-Codice":"D.01.01.a",
+                "Descrizione":"NOLO A FREDDO DI AUTOCARRO RIBALTABILE da mc 11",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":17.49,
+                "Importo":17.49
+            },
+            {
+                "Codice":"VEN24-PR-A.98.19.a",
+                "Ex-Codice":"B.98.19.a",
+                "Descrizione":"CONSUMO CARBURANTE",
+                "Qta":8.0,
+                "UMI":"l",
+                "IU":1.48,
+                "Importo":11.84
+            },
+            {
+                "Codice":"VEN24-RU.01.02.a",
+                "Ex-Codice":"A.01.02.a",
+                "Descrizione":"OPERAIO SPECIALIZZATO",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":31.67,
+                "Importo":31.67
+            }
+        ],
+        "Totale":null,
+        "SGEUI":null,
+        "ITU":null
+    },
+    {
+        "Codice":"VEN24-AT.09.01.b",
+        "Ex-Codice":"D.09.01.b",
+        "Descrizione":"NOLO A CALDO DI AUTOCARRO RIBALTABILE da mc 15",
+        "SUB":[
+            {
+                "Codice":"VEN24-AT.09.01.a",
+                "Ex-Codice":"D.09.01.a",
+                "Descrizione":"NOLO A CALDO DI AUTOCARRO RIBALTABILE da mc 11",
+                "Qta":0.004,
+                "UMI":"h",
+                "IU":61,
+                "Importo":0.24
+            },
+            {
+                "Codice":"VEN24-AT.01.01.a",
+                "Ex-Codice":"D.01.01.a",
+                "Descrizione":"NOLO A FREDDO DI AUTOCARRO RIBALTABILE da mc 11",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":17.49,
+                "Importo":17.49
+            },
+            {
+                "Codice":"VEN24-PR-A.98.19.a",
+                "Ex-Codice":"B.98.19.a",
+                "Descrizione":"CONSUMO CARBURANTE",
+                "Qta":8.0,
+                "UMI":"l",
+                "IU":1.48,
+                "Importo":11.84
+            },
+            {
+                "Codice":"VEN24-RU.01.02.a",
+                "Ex-Codice":"A.01.02.a",
+                "Descrizione":"OPERAIO SPECIALIZZATO",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":31.67,
+                "Importo":31.67
+            },
+            {
+                "Codice":"VEN24-AT.01.01.b",
+                "Ex-Codice":"D.01.01.b",
+                "Descrizione":"NOLO A FREDDO DI AUTOCARRO RIBALTABILE da mc 15",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":22.09,
+                "Importo":22.09
+            },
+            {
+                "Codice":"VEN24-PR-A.98.19.a",
+                "Ex-Codice":"B.98.19.a",
+                "Descrizione":"CONSUMO CARBURANTE",
+                "Qta":8.0,
+                "UMI":"l",
+                "IU":1.48,
+                "Importo":11.84
+            },
+            {
+                "Codice":"VEN24-RU.01.02.a",
+                "Ex-Codice":"A.01.02.a",
+                "Descrizione":"OPERAIO SPECIALIZZATO",
+                "Qta":1.0,
+                "UMI":"h",
+                "IU":31.67,
+                "Importo":31.67
+            }
+        ],
+        "Totale":65.6,
+        "SGEUI":null,
+        "ITU":65.6
+    }
+]
