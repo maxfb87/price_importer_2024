@@ -46,9 +46,9 @@ for index, row in df_analisi.iterrows():
 #            new_row["ITU"] = row_data[6]
             nuova_riga = False
                         
-        if row_data[0] == "SPESE GENERALI E UTILE D'IMPRESA:" and (row_data[5] == 0.265 or row_data[5] == 0):
-            continue
-#            new_row["SGEUI"] = row_data[6]
+        if row_data[0] == "SPESE GENERALI E UTILE D'IMPRESA:" and (row_data[5] == 0.265 or row_data[5] == 0 or row_data[5] == 0.15):
+#            continue
+            new_row["SGEUI"] = row_data[5]
             
         # Store the data in the dictionary
         if isinstance(row_data[4], str):
@@ -70,9 +70,9 @@ for index, row in df_analisi.iterrows():
         continue
 
     if nuova_riga == False:
-        new_row["SUB"] = sub
+        new_row["SUB"] = sub 
         #analisi_prezzi = analisi_prezzi._append(new_row, ignore_index=True)
-        analisi_prezzi = analisi_prezzi.append(new_row, ignore_index=True)
+        analisi_prezzi = analisi_prezzi._append(new_row, ignore_index=True)
 
 #analisi_prezzi.to_json('exp_analisi2024.json', orient='records', indent=4, default_handler=str)
 
@@ -94,6 +94,7 @@ for index, row in df_elenco.iterrows():
     #new_row["SUB"] = analisi_prezzi[ analisi_prezzi["Codice"] == new_row["Codice"] ]["SUB"].iat[0]["Codice"]
     if not analisi_prezzi[ analisi_prezzi["Codice"] == new_row["Codice"] ]["SUB"].empty:
         new_row["SUB"] = analisi_prezzi[ analisi_prezzi["Codice"] == new_row["Codice"] ]["SUB"]
+        new_row["SGEUI"] = analisi_prezzi[ analisi_prezzi["Codice"] == new_row["Codice"] ]["SGEUI"]
 #        print(new_row["SUB"])
 #    print(new_row["Codice"])
     #print(analisi_prezzi[ analisi_prezzi["Codice"] == new_row["Codice"] ]["SUB"])
@@ -105,9 +106,12 @@ for index, row in df_elenco.iterrows():
 print()
 
 #print(analisi_prezzi[ analisi_prezzi["Codice"=="VEN24-AT.09.01.a"]["Descrizione"] ])
-print(analisi_prezzi[analisi_prezzi["Codice"] == "VEN24-AT.09.01.a"] ["SUB"])
+#print(analisi_prezzi[analisi_prezzi["Codice"] == "VEN24-AT.09.01.a"] ["SUB"])
 
-print(elenco_prezzi[elenco_prezzi["Codice"] == "VEN24-AT.09.01.c"]["SUB"])
+#print(elenco_prezzi[elenco_prezzi["Codice"] == "VEN24-AT.09.01.c"]["SUB"])
+
+print(elenco_prezzi[elenco_prezzi["Codice"] == "VEN24-21.02.14.a"]["SUB"])
+print(elenco_prezzi[elenco_prezzi["Codice"] == "VEN24-21.02.14.a"]["SGEUI"])
 
 elenco_prezzi.to_json('exp_elenco2024.json', orient='records', indent=4, default_handler=str)
 
