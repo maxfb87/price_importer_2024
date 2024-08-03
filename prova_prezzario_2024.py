@@ -117,22 +117,6 @@ for codice in codici:
     except Exception as e:
         raise Exception(f"Errore durante la ricerca del codice: {e}")
 
-
-
-    boq_cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_schedule=boq)
-
-    boq_cost_item.Identification = prezzo.Codice.iat[0]
-    boq_cost_item.Name = prezzo.Descrizione.iat[0]
-
-    value = ifcopenshell.api.run("cost.add_cost_value", model, parent=boq_cost_item)
-    ifcopenshell.api.run(
-        "cost.edit_cost_value",
-        model,
-        cost_value = value,
-        attributes={"AppliedValue": prezzo.Prezzo.iat[0]},
-    )
-
-
     sor_cost_item = get_cost_item(sor, prezzo.Codice.iat[0])
 
     if sor_cost_item is not None:
@@ -141,11 +125,19 @@ for codice in codici:
     else:
         raise ValueError("La voce di prezzo nell'EPU non può essere creata")
 
+    value = ifcopenshell.api.run("cost.add_cost_value", model, parent=sor_cost_item)
+    ifcopenshell.api.run(
+        "cost.edit_cost_value",
+        model,
+        cost_value = value,
+        attributes={"AppliedValue": prezzo.Prezzo.iat[0]},
+    )
 
+    boq_cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_schedule=boq)
+    boq_cost_item.Identification = prezzo.Codice.iat[0]
+    boq_cost_item.Name = prezzo.Descrizione.iat[0]
 
-
-
-
+    ifcopenshell.api.run("cost.assign_cost_value", model, cost_item = boq_cost_item , cost_rate = sor_cost_item)
 
     print(f"CODICE {prezzo.Codice.iat[0]}")
     print(f"DESCRIZIONE {prezzo.Descrizione.iat[0]}")
