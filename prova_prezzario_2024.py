@@ -44,7 +44,7 @@ def get_cost_item(cost_schedule, cost_item_identification):
             break
         
     if not is_existing:
-        cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_schedule = sor)
+        cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_schedule = cost_schedule)
 
     return cost_item
 
@@ -102,8 +102,8 @@ except Exception as e:
     raise Exception(f"Errore durante la lettura del file JSON: {e}")
 
 #codice = "VEN24-01.19.02.00"
-codici = ["VEN24-01.19.02.00",
-          "VEN24-01.19.01.00"]
+codici = ["VEN24-01.19.02.00", #cartongesso
+          "VEN24-01.05.14.b"] #demolizioni
 
 for codice in codici:
     try:
@@ -133,25 +133,84 @@ for codice in codici:
         attributes={"AppliedValue": prezzo.Prezzo.iat[0]},
     )
 
+    #creo unità misura
+    #    measure_class = ifcopenshell.util.unit.get_symbol_measure_class(prezzo.UMI.iat[0])
+    #    value_component = model.create_entity(measure_class, 1)
+    #    unit_component = model.create_unit(prezzo.UMI.iat[0])
+    #    value.UnitBasis = model.createIfcMeasureWithUnit(value_component, unit_component)
+
+    for sub_codice in prezzo.SUB.iat[0]:
+        sub = elenco_prezzi[ elenco_prezzi["Codice"] == sub_codice]
+        sub_cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_item = sor_cost_item)
+        if sub_cost_item is not None:
+            sub_cost_item.Identification = sub.Codice.iat[0]
+            sub_cost_item.Name = sub.Descrizione.iat[0]
+        else:
+            raise ValueError("La sub voce di prezzo nell'EPU non può essere creata")
+
+
+        sub_cost_item_sor_divided = get_cost_item(
+            cost_schedule = sor_divided,
+            cost_item_identification= sub.Codice.iat[0]
+        )
+        if sub_cost_item_sor_divided is not None:
+            sub_cost_item_sor_divided.Identification = sub.Codice.iat[0]
+            sub_cost_item_sor_divided.Name = sub.Descrizione.iat[0]
+        else:
+            raise ValueError("La sub voce di prezzo nell'EPU Elementari non può essere creata")
+
+        if not sub_cost_item_sor_divided.CostValues:
+            value = ifcopenshell.api.run(
+                "cost.add_cost_value",
+                model,
+                parent=sub_cost_item_sor_divided
+            )
+            ifcopenshell.api.run(
+                "cost.edit_cost_value",
+                model,
+                cost_value = value,
+                attributes={"AppliedValue": sub.Prezzo.iat[0]},
+            )
+
+
+        ifcopenshell.api.run(
+            "cost.assign_cost_value",
+            model,
+            cost_item = sub_cost_item,
+            cost_rate = sub_cost_item_sor_divided
+        )
+        #        value = ifcopenshell.api.run("cost.add_cost_value", model, parent = sub_cost_item)
+        #        ifcopenshell.api.run(
+        #            "cost.edit_cost_value",
+        #            model,
+        #            cost_value = value,
+        #            attributes={"AppliedValue": sub.Prezzo.iat[0]},
+        #        )
+
+        
+
+
+
+
     boq_cost_item = ifcopenshell.api.run("cost.add_cost_item", model, cost_schedule=boq)
     boq_cost_item.Identification = prezzo.Codice.iat[0]
     boq_cost_item.Name = prezzo.Descrizione.iat[0]
 
     ifcopenshell.api.run("cost.assign_cost_value", model, cost_item = boq_cost_item , cost_rate = sor_cost_item)
 
-    print(f"CODICE {prezzo.Codice.iat[0]}")
-    print(f"DESCRIZIONE {prezzo.Descrizione.iat[0]}")
-    print(f"UMI {prezzo.UMI.iat[0]}")
-    print(f"PREZZO {prezzo.Prezzo.iat[0]}")
-    print(f"SGEUI {prezzo.SGEUI.iat[0]}")
-    print()
-    print(f"ELENCO SUB:")
+    #print(f"CODICE {prezzo.Codice.iat[0]}")
+    #print(f"DESCRIZIONE {prezzo.Descrizione.iat[0]}")
+    #print(f"UMI {prezzo.UMI.iat[0]}")
+    #print(f"PREZZO {prezzo.Prezzo.iat[0]}")
+    #print(f"SGEUI {prezzo.SGEUI.iat[0]}")
+    #print()
+    #print(f"ELENCO SUB:")
 
     for sub_codice in prezzo.SUB.iat[0]:
         sub = elenco_prezzi[ elenco_prezzi["Codice"] == sub_codice]
-        print()
+        #print()
         #print(f"CODICE {sub.Codice.iat[0]}")
-        print(f"DESCRIZIONE {sub.Descrizione.iat[0]}")
+        #print(f"DESCRIZIONE {sub.Descrizione.iat[0]}")
         #print(f"UMI {sub.UMI.iat[0]}")
         #print(f"PREZZO {sub.Prezzo.iat[0]}")
         #if not np.isnan(sub.SGEUI.iat[0]):
